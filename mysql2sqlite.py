@@ -146,13 +146,15 @@ def mysql_db_structure(logfile) :
 
 
     # Extract foreign keys
-    #for table in table_def :
-    #    cursor.execute("show create table " + table)
-    #    result = cursor.fetchone()
-    #    fkc = re.findall("FOREIGN.*?\n", result['Create Table'])
-    #    if len(fkc) > 0 :
-    #        constraint_def[table] = {}
-    #        constraint_def[table] = " ".join(fkc)
+    for table in table_def :
+        cursor.execute("show create table " + table)
+        result = cursor.fetchone()
+		if not result:
+			continue
+        fkc = re.findall("FOREIGN.*?\n", result['Create Table'])
+        if len(fkc) > 0 :
+            constraint_def[table] = {}
+            constraint_def[table] = " ".join(fkc)
 
     # Log structure
 
